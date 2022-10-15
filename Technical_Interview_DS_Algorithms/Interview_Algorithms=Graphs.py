@@ -294,8 +294,8 @@ def shortest_path(edges, nodeA, nodeB):
 
 #   _________________________________________
 # UNCOMMENT FUNCTION CALL SHORTEST_PATH
-print(shortest_path(shortest_path_edgelist, "w", "z"))  # 2
-print(shortest_path(shortest_path_edgelist, "x", "h"))  # no path found
+# print(shortest_path(shortest_path_edgelist, "w", "z"))  # 2
+# print(shortest_path(shortest_path_edgelist, "x", "h"))  # no path found
 
 
 island_grid = [
@@ -319,18 +319,17 @@ def island_count(grid):
 
 
 def explore(grid, r, c, visited):
-    rowInBounds = 0 <= r and r < len(grid)
-    colInBounds = 0 <= c and c < len(grid)
-    if (not rowInBounds) or (not colInBounds):
+    row_inbounds = 0 <= r < len(grid)
+    col_inbounds = 0 <= c < len(grid[0])
+    if not row_inbounds or not col_inbounds:
         return False
-
     if grid[r][c] == "W":
         return False
 
-    pos = r + "," + c
+    pos = (r, c)
     if pos in visited:
         return False
-    visited.append(pos)
+    visited.add(pos)
 
     explore(grid, r - 1, c, visited)
     explore(grid, r + 1, c, visited)
@@ -340,4 +339,53 @@ def explore(grid, r, c, visited):
     return True
 
 
+#   _________________________________________
+# UNCOMMENT FUNCTION CALL: ISLAND COUNT
 # print(island_count(island_grid))
+
+
+minimum_island_grid = [
+    ["L", "W", "W", "L", "W"],
+    ["L", "W", "W", "L", "L"],
+    ["W", "L", "W", "L", "W"],
+    ["W", "W", "W", "W", "W"],
+    ["W", "W", "L", "L", "L"],
+]
+
+
+def minimum_island(grid):
+    all_islands = []
+    visited = set()
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            x = explore(grid, r, c, visited)
+            if x:
+                all_islands.append(x)
+    return min(all_islands)
+
+
+def explore(grid, r, c, visited):
+    row_inbounds = 0 <= r < len(grid)
+    col_inbounds = 0 <= c < len(grid[0])
+    if not row_inbounds or not col_inbounds:
+        return 0
+    if grid[r][c] == "W":
+        return 0
+
+    pos = (r, c)
+    if pos in visited:
+        return 0
+    visited.add(pos)
+
+    size = 1
+    size += explore(grid, r - 1, c, visited)
+    size += explore(grid, r + 1, c, visited)
+    size += explore(grid, r, c + 1, visited)
+    size += explore(grid, r, c - 1, visited)
+
+    return size
+
+
+#   _________________________________________
+# UNCOMMENT FUNCTION CALL: MINIMUM ISLAND
+print(minimum_island(minimum_island_grid))
