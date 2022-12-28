@@ -345,9 +345,9 @@ def explore(grid, r, c, visited):
 
 
 minimum_island_grid = [
-    ["L", "W", "W", "L", "W"],
+    ["L", "W", "L", "L", "W"],
     ["L", "W", "W", "L", "L"],
-    ["W", "L", "W", "L", "W"],
+    ["W", "W", "W", "L", "W"],
     ["W", "W", "W", "W", "W"],
     ["W", "W", "L", "L", "L"],
 ]
